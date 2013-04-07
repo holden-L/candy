@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import Game
 
 # Some constants to be imported into other files
