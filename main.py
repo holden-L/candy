@@ -1,6 +1,6 @@
-#!/usr/bin/python
 import Game
 
+# Some constants to be imported into other files
 WIDTH, HEIGHT = 700, 600
 SPEED = 5
 UP = DOWN = LEFT = RIGHT = False

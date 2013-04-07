@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import pygame
 from random import randrange
 from main import HEIGHT, WIDTH

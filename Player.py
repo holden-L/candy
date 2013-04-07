@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import pygame
 from main import HEIGHT, WIDTH
 from main import SPEED
