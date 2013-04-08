@@ -12,8 +12,14 @@ class Candy:
         self.image = pygame.transform.scale(self.image, (size, size))
         self.size = size
         self.pickup = pygame.mixer.Sound('Resources/pickup.wav')
+        self.mute = False
 
     def move(self):
-        self.pickup.play()
+        if self.mute == False:
+            self.pickup.play()
+        self.candy.top = randrange(self.size, HEIGHT) - self.size
+        self.candy.left = randrange(self.size, WIDTH) - self.size
+
+    def timeout(self):
         self.candy.top = randrange(self.size, HEIGHT) - self.size
         self.candy.left = randrange(self.size, WIDTH) - self.size
