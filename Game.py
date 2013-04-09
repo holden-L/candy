@@ -15,7 +15,7 @@ class Game:
         self.mainClock = pygame.time.Clock()
         self.player = Player.Player(size=30, image="Resources/player.png")
         self.candy = Candy.Candy(size=50, image="Resources/candy.png")
-        self.score, self.lives, self.FPS = 0, 500, 60
+        self.score, self.lives, self.FPS = 0, 5, 60
         self.font = pygame.font.SysFont(None, 48)
         self.prev = time.time()
 
@@ -73,7 +73,7 @@ class Game:
                 self.prev = time.time()
                 self.candy.move()
             if time.time() - self.prev >= 1.75:
-                self.lives -= 49
+                self.lives -= 1
                 self.prev = time.time()
                 self.candy.timeout()
                 self.lifeSurface = self.font.render(str(self.lives), 1,
