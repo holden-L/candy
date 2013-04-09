@@ -24,6 +24,8 @@ To Do
 * Make candies automatically move after a period of time.
 * Create a gameover, based on how many candies have been missed.
 * Keep track of the score in window, rather than printing it to a terminal after the game finishes.
+* Add special candies that increase life, and randomly appear instead of candy.
+* Display lives with hearts in bottom left.
 
 Game Play
 --------

@@ -15,11 +15,26 @@ class Game:
         self.mainClock = pygame.time.Clock()
         self.player = Player.Player(size=30, image="Resources/player.png")
         self.candy = Candy.Candy(size=50, image="Resources/candy.png")
-        self.score, self.lives, self.FPS = 0, 5, 60
-        self.font = pygame.font.SysFont("Anoymous Pro", 48)
+        self.score, self.lives, self.FPS = 0, 500, 60
+        self.font = pygame.font.SysFont(None, 48)
+        self.prev = time.time()
 
-    def write(self, fontSurface, location):
-        self.windowSurface.blit(fontSurface, location)
+    def printinfo(self):
+        fontSurface = self.font.render(str(self.score), 1, (255, 255, 255))
+        self.windowSurface.blit(fontSurface, (5, 5))
+        fontSurface = self.font.render(str(self.lives), 1, (255, 0, 50))
+        self.windowSurface.blit(fontSurface,
+                                (WIDTH - fontSurface.get_width() - 5, 5))
+
+    def pause(self):
+        while 1:
+            for event in pygame.event.get():
+                if event.type == pygame.locals.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.locals.KEYUP:
+                    if event.key == ord('p'):
+                        return
 
     def eventhandle(self, event):
         if event.type == pygame.locals.QUIT:
@@ -46,33 +61,29 @@ class Game:
                 Player.RIGHT = False
             elif event.key == ord('m'):
                 self.candy.mute = not self.candy.mute
+            elif event.key == ord('p'):
+                self.pause()
 
     def mainloop(self):
-        prev = time.time()
-        scoreSurface = self.font.render(str(0), 1, (255, 255, 255))
-        lifeSurface = self.font.render(str(self.lives), 1, (255, 0, 40))
         while 1:
             for event in pygame.event.get():
                 self.eventhandle(event)
             if self.player.player.colliderect(self.candy.candy):
                 self.score += 1
-                prev = time.time()
+                self.prev = time.time()
                 self.candy.move()
-                scoreSurface = self.font.render(str(self.score), 1,
-                                                (255, 255, 255))
-            if time.time() - prev >= 1.75:
-                self.lives -= 1
-                prev = time.time()
+            if time.time() - self.prev >= 1.75:
+                self.lives -= 49
+                self.prev = time.time()
                 self.candy.timeout()
-                lifeSurface = self.font.render(str(self.lives), 1,
-                                               (255, 0, 40))
+                self.lifeSurface = self.font.render(str(self.lives), 1,
+                                                    (255, 0, 40))
             if self.lives == 0:
                 print "Score: %d" % (self.score)
                 pygame.quit()
                 sys.exit()
             self.windowSurface.fill((0, 0, 0))
-            self.write(lifeSurface, (WIDTH - lifeSurface.get_width() - 5, 5))
-            self.write(scoreSurface, (5, 5))
+            self.printinfo()
             self.player.update()
             self.windowSurface.blit(self.player.image, self.player.player)
             self.windowSurface.blit(self.candy.image, self.candy.candy)
